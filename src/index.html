@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Application</title>
+    <style>
+      .Myul {
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Chat App</h1>
+    <ul class="Myul">
+      <li>Welcome</li>
+    </ul>
+    <form class="Myform">
+      <input type="text" name="" id="" size="100" class="myInput" />
+      <input type="submit" name="" id="" />
+    </form>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.0/socket.io.min.js"
+      integrity="sha512-2j1eiYSzeFsyYR2U3lD1znxCZwsymcYr5REPVR3ijiFexmtaxzjj1/SWxaugYlH78QWZdRMg214NAbGlI8HuTw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      var socket = io();
+      var ul = document.querySelector("ul.Myul");
+      socket.on("server Event", (payload) => {
+        // const li = document.createElement("li");
+        // li.textContent = payload;
+        // document.querySelector(".Myul").appendChild(li);
+        console.log(payload);
+        ul.innerHTML += `<li>${payload}</li>`;
+      });
+      document.querySelector("form.Myform").addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log("ok");
+        const msg = document.querySelector("input.myInput").value;
+        console.log(msg);
+        socket.emit("chat message", msg);
+        document.querySelector("input.myInput").value = " ";
+      });
+    </script>
+  </body>
+</html>
